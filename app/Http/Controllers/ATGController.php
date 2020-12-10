@@ -45,7 +45,7 @@ class ATGController extends Controller
             'pin' => $validatedData['pin']
         ];
         Access::create($data);
-        return back()->with(['status'=> "Successfully Saved"]);
+        return redirect()->back()->with(['status'=> "Successfully Saved"]);
 
     }
 
