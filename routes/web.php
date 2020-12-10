@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::GET('/index', 'ATGController@index')->name('home');
+Route::GET('/', 'ATGController@index')->name('home');
 Route::POST('/store', 'ATGController@store')->name('store');
