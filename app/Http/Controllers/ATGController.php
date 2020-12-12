@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Access;
 use Illuminate\Http\Request;
 use App\Http\Requests\AccessRequest;
+use App\Traits\AccessTrait;
+use Log;
 
 class ATGController extends Controller
 {
+    use AccessTrait;
     /**
      * Display a listing of the resource.
      *
@@ -38,13 +41,7 @@ class ATGController extends Controller
     public function store(AccessRequest $request)
     {
         //
-        $validatedData = $request->validated();
-        $data = [
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'pin' => $validatedData['pin']
-        ];
-        Access::create($data);
+        $this->SaveUser($request);
         return redirect()->back()->with(['status'=> "Successfully Saved"]);
 
     }
