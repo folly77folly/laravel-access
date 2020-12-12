@@ -3,7 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Http\Request;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+use Log;
+// use Validator;
 class AccessRequest extends FormRequest
 {
     /**
@@ -15,6 +19,35 @@ class AccessRequest extends FormRequest
     {
         return true;
     }
+
+
+    public $validator = null;
+    protected function failedValidation(Validator $validator)
+    {
+        $this->validator = $validator;
+        Log::info('Email Not Sent');
+        if (Request::is('api*')){
+            throw new HttpResponseException(response()->json([
+                "status"=> 0,
+                "message"=> "Double Entry is not allowed",
+                "data"=>$validator->errors()
+                , 422
+                ])); 
+        }else{
+            if ($this->validator->fails()){
+                return response()->json($validator->errors(), 400);
+            }
+        }
+    }
+
+    public function response(){
+
+        if (Request::is('api*')){
+            var_dump('hello');
+            return response()->json($validator->errors(), 400);
+        }
+    }
+
 
     /**
      * Get the validation rules that apply to the request.

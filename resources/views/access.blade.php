@@ -81,58 +81,61 @@
             @endif
 
             <div class="col-md-4">
-                <div class="title m-b-md">
-                    Access Task
-                </div>
-                <div>
-                    @if (session('status'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong> {{ session('status') }} </strong>.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                      </div>
-                    @endif
-                    <form method="POST" action="{{ route('store') }}">
-                        @csrf
-                        <div class="form-group mb-4">
-                            <label for="names">Name</label>
-                            <input type="text" name ="name" value ="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" id="names" aria-describedby="name" placeholder="Enter Name" autocomplete="off">
-                            @error('name')
-                              <span class="invalid-feedback" role="">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                            @enderror 
+                <div class="container">
+                    <div class="title m-b-md">
+                        Access Task
+                    </div>
+                    <div>
+                        @if (session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong> {{ session('status') }} </strong>.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                           </div>
-                        <div class="form-group mb-4">
-                          <label for="email">Email address</label>
-                          <input type="text" name ="email" class="form-control @error('email') is-invalid @enderror"  value ="{{ old('email') }}" id="email" aria-describedby="email" placeholder="Enter email" autocomplete="off">
-                          @error('email')
-                            <span class="invalid-feedback" role="">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                          @enderror
-                          <small id="email" class="form-text text-muted">We'll never share your email with anyone else.</small>
-
-                        </div>
-                        <div class="form-group mb-4">
-                          <label for="pin">Pin</label>
-                          <input type="password" class="form-control @error('pin') is-invalid @enderror" id="pin" name="pin" placeholder="Six-digits pin" value ="{{ old('pin') }}">
-                          @error('pin')
-                              <span class="invalid-feedback">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                          @enderror
-                        </div>
-                        <div class="form-group mb-4">
-                            <input type="checkbox" onclick="myFunction()"> Show Pin
-                        </div>
-                        
-                        <div class="form-group form-row">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                      </form>
-
+                        @endif
+                        <form method="POST" action="{{ route('store') }}">
+                            @csrf
+                            <div class="form-group mb-4">
+                                <label for="names">Name</label>
+                                <input type="text" name ="name" value ="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" id="names" aria-describedby="name" placeholder="Enter Name" autocomplete="off">
+                                @error('name')
+                                  <span class="invalid-feedback" role="">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                @enderror 
+                              </div>
+                            <div class="form-group mb-4">
+                              <label for="email">Email address</label>
+                              <input type="text" name ="email" class="form-control @error('email') is-invalid @enderror"  value ="{{ old('email') }}" id="email" aria-describedby="email" placeholder="Enter email" autocomplete="off">
+                              @error('email')
+                                <span class="invalid-feedback" role="">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                              @enderror
+                              <small id="email" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    
+                            </div>
+                            <div class="form-group mb-4">
+                              <label for="pin">Pin</label>
+                              <input type="password" class="form-control @error('pin') is-invalid @enderror" id="pin" name="pin" placeholder="Six-digits pin" value ="{{ old('pin') }}">
+                              @error('pin')
+                                  <span class="invalid-feedback">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                              @enderror
+                            </div>
+                            <div class="form-group mb-4">
+                                <input type="checkbox" onclick="myFunction()"> Show Pin
+                            </div>
+                            
+                            <div class="form-group form-row">
+                                <button type="submit" class="btn btn-primary form-control">Submit</button>
+                            </div>
+                          </form>
+    
+                    </div>
+    
                 </div>
-
+                
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
