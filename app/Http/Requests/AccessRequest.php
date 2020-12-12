@@ -25,7 +25,7 @@ class AccessRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         $this->validator = $validator;
-        Log::info('Email Not Sent');
+        Log::info('Email Sending Failed');
         if (Request::is('api*')){
             throw new HttpResponseException(response()->json([
                 "status"=> 0,
