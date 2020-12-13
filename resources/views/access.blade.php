@@ -82,9 +82,9 @@
 
             <div class="col-md-4">
                 <div class="container">
-                    <div class="title m-b-md">
+                    <h1 class="m-b-md p-3">
                         Access Task
-                    </div>
+                    </h1>
                     <div>
                         @if (session('status'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -127,7 +127,7 @@
                                 <input type="checkbox" onclick="myFunction()"> Show Pin
                             </div>
                             
-                            <div class="form-group form-row">
+                            <div class="form-group form-row p-3">
                                 <button type="submit" class="btn btn-primary form-control">Submit</button>
                             </div>
                           </form>
