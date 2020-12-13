@@ -22,6 +22,7 @@ trait AccessTrait
             'pin' => $validatedData['pin']
         ];
 
+        
         $message = "A new user is added";
         $email= $data['email'];
         $details = [
