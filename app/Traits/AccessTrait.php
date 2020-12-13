@@ -9,6 +9,8 @@ use App\Http\Controllers\Request;
 use App\Access;
 use Log;
 use App\Http\Requests\AccessRequest;
+use App\Mail\MessageMail;
+use Illuminate\Support\Facades\Mail;
 trait AccessTrait
 {
     public function SaveUser (AccessRequest $request)
@@ -30,7 +32,7 @@ trait AccessTrait
             'body' => 'I Appreciate your Message and will reply Shortly'
         ];
     
-        \Mail::to($email)->send(new \App\Mail\MessageMail($details));
+        Mail::to($email)->send(new MessageMail($details));
         $details = [
             'title' => 'A New Contact ',
             'body' => $message
