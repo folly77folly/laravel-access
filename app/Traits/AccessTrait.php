@@ -31,12 +31,12 @@ trait AccessTrait
             'title' => 'Thanks For Contacting Me ',
             'body' => 'I Appreciate your Message and will reply Shortly'
         ];
-    
-        Mail::to($email)->send(new MessageMail($details));
-        $details = [
-            'title' => 'A New Contact ',
-            'body' => $message
-        ];
+        try{
+
+            Mail::to($email)->send(new MessageMail($details));
+        }catch(Exception  $e){
+            Log::error('Email Not Sent');
+        }
 
         Access::create($data);
         Log::info('Email Sent');
