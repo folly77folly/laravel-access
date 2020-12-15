@@ -9,7 +9,6 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-
         <!-- Styles -->
         <style>
             html, body {
@@ -92,11 +91,15 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                           </div>
                         @endif
+                        <div style="display:none;" class="alert alert-dismissible fade show" role="alert" id ="successMsg">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>                            
+                        </div>
                         <form method="POST" action="{{ route('store') }}">
                             @csrf
                             <div class="form-group mb-4">
                                 <label for="names">Name</label>
-                                <input type="text" name ="name" value ="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" id="names" aria-describedby="name" placeholder="Enter Name" autocomplete="off">
+                                <input type="text" name ="name" value ="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" id="name" aria-describedby="name" placeholder="Enter Name" autocomplete="off">
                                 @error('name')
                                   <span class="invalid-feedback" role="">
                                       <strong>{{ $message }}</strong>
@@ -111,7 +114,7 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                               @enderror
-                              <small id="email" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                              <small id="emails" class="form-text text-muted">We'll never share your email with anyone else.</small>
     
                             </div>
                             <div class="form-group mb-4">
@@ -128,7 +131,7 @@
                             </div>
                             
                             <div class="form-group form-row p-3">
-                                <button type="submit" class="btn btn-primary form-control">Submit</button>
+                                <button type="button" id="submitUser" onclick="myFunction2()" class="btn btn-primary form-control">Submit</button>
                             </div>
                           </form>
     
@@ -140,6 +143,8 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ URL::asset('js/access.js') }}"></script>
     </body>
 </html>
 <script>
@@ -151,5 +156,55 @@ function myFunction() {
   } else {
     x.type = "password";
   }
+}
+
+function myFunction2 (){
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var pin = $("#pin").val();
+        $.ajax({
+            type:"POST",
+            url: "{{ route("save")  }}",
+            data:{
+                name:name,
+                email:email,
+                pin:pin,
+                _token: '{{csrf_token()}}'
+            },
+            beforeSend: function(){
+                var loader ='<span class="spinner-border spinner-border-sm"></span> Loading'
+                $("#submitUser").html(loader)
+            },
+            success: function(data){
+                if(data.status === "1"){
+                    $('#successMsg').show()
+                    $('#successMsg').removeClass('alert-danger')
+                    $('#successMsg').addClass('alert-success')
+                    $('#successMsg').html(data.message)
+                    $("#submitUser").text('Submit')
+                    clearTextbox();
+                }
+            },
+            error: function(xhr, status, error) {
+            var err = JSON.parse(xhr.responseText);
+            var errArray = err.data
+            $("#submitUser").text('Submit')
+            $('#successMsg').show()
+            $('#successMsg').addClass('alert-success')
+            $('#successMsg').addClass('alert-danger')
+            $('#successMsg').html(err.message)
+            Object.values(errArray).forEach(element => {
+                var errmsg = `<li> ${element[0]} </li>`
+                $('#successMsg').append(errmsg)
+            });
+            }
+        })
+    
+}
+function clearTextbox(){
+    $("#name").val('');
+    $("#email").val('');
+    $("#pin").val('');
+
 }
 </script>
