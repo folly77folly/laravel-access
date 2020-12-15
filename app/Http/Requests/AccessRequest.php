@@ -32,6 +32,7 @@ class AccessRequest extends FormRequest
                 "message"=> "Double Entry is not allowed",
                 "data"=>$validator->errors()
             ],422)); 
+
         }else{
             if ($this->validator->fails()){
                 return response()->json($validator->errors(), 400);
